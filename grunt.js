@@ -47,6 +47,14 @@ module.exports = function(grunt) {
   , lint: { requireConfig: ['src/*.js']
           }
 
+
+    // Minification
+  , min: { clientjs: { src: ['dist/tldrio-api-js-client.js']
+                       , dest: 'dist/tldrio-api-js-client.min.js'
+                       }
+         }
+
+
     // requireJS config
     // https://github.com/gruntjs/grunt-contrib
     // pretty much the same as with requireJS without grunt
@@ -65,7 +73,6 @@ module.exports = function(grunt) {
                                       }
                            }
                }
-
   });
 
 
