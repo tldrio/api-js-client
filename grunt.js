@@ -77,5 +77,4 @@ module.exports = function(grunt) {
   grunt.registerTask('all', 'js min');
   grunt.registerTask('default', 'all');
 
-
 };
