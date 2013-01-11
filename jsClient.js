@@ -14,6 +14,15 @@
     this.apiUrl = options.apiUrl || 'https://api.tldr.io/v1';
   }
 
+
+  /**
+   * Fetch the latest tldrs
+   * @param {Object} number How many latest tldrs to fetch (max possible is 10)
+   * @param {Function} callback Will be called after request is processed. Signature: err, tldrs
+   *                            err is a message explaining the error, or null if no error
+   *                            tldrs is an array of the retrieved tldrs
+   *
+   */
   Client.prototype.getLatestTldrs = function (number, callback) {
     $.ajax({ type: 'GET'
            , url: this.apiUrl + '/tldrs/latest/' + number
@@ -22,10 +31,16 @@
                       }
            , crossDomain: true
            })
-     .done(function (data) {
-       console.log(data);
+     .done(function (data) { callback(null, data); })
+     .fail(function (jqxhr) {
+       if (jqxhr.status === 404) { return callback('URL not found'); }
+       if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
+
+       return callback('An unknown error happened');
      });
   };
+
+
 
   // Expose the client constructor in the global object
   window.TldrioApiClient = Client;
