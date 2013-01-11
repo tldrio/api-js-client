@@ -11,7 +11,7 @@
 
     this.name = options.name;
     this.key = options.key;
-    this.apiUrl = options.apiUrl || 'https://api.tldr.io/v1';
+    this.apiUrl = 'https://api.tldr.io/v1';
   }
 
 
