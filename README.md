@@ -10,9 +10,22 @@ its content (it's very small) in your script.
 You also need jQuery, and then you're set!
 
 
-## Using the client
-Create a client:  
-    var client = new TldrioApiClient({ name: 'saloute'
-                                     , key: 'macle'
-                                     });
+## Creating a client
+```javascript
+var client = new TldrioApiClient({ name: 'YOUR_CLIENT_NAME'
+                                 , key: 'YOUR_CLIENT_KEY'
+                                 });
+
+```
+
+## Getting the latest tldrs
+The syntax is `client.getLatestTldrs(number, callback)`, where `number` is the number of tldrs you want to get (maximum 10) and the callback's signature is (error, tldrs). Example:
+
+```javascript
+client.getLatestTldrs(5, function (err, tldrs) {
+  if (err) { return console.log("Dang, an error happened: " + err); }
+    
+  console.log(tldrs);    
+})
+```
 
