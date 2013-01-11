@@ -29,7 +29,31 @@
            , headers: { 'api-client-name': this.name
                       , 'api-client-key': this.key
                       }
-           , crossDomain: true
+           })
+     .done(function (data) { callback(null, data); })
+     .fail(function (jqxhr) {
+       if (jqxhr.status === 404) { return callback('URL not found'); }
+       if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
+
+       return callback('An unknown error happened');
+     });
+  };
+
+
+  /**
+   * Search a tldr by url
+   * @param {Object} number How many latest tldrs to fetch (max possible is 10)
+   * @param {Function} callback Will be called after request is processed. Signature: err, tldr
+   *                            err is a message explaining the error, or null if no error
+   *                            tldr is the tldr
+   *
+   */
+  Client.prototype.searchByUrl = function (url, callback) {
+    $.ajax({ type: 'GET'
+           , url: this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url)
+           , headers: { 'api-client-name': this.name
+                      , 'api-client-key': this.key
+                      }
            })
      .done(function (data) { callback(null, data); })
      .fail(function (jqxhr) {
