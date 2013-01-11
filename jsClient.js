@@ -1,3 +1,9 @@
+/**
+ * Javascript client for the tldr.io API
+ * MIT License, tldr.io
+ *
+ */
+
   /**
    * Create a new client for the tldr.io API
    * @param {Object} options Object containing the credentials
