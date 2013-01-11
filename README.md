@@ -19,13 +19,24 @@ var client = new TldrioApiClient({ name: 'YOUR_CLIENT_NAME'
 ```
 
 ## Getting the latest tldrs
-The syntax is `client.getLatestTldrs(number, callback)`, where `number` is the number of tldrs you want to get (maximum 10) and the callback's signature is (error, tldrs). Example:
+The syntax is `client.getLatestTldrs(number, callback)`, where `number` is the number of tldrs you want to get (maximum 10) and the callback's signature is (error, tldrs). `error` will for example tell you if you have a credentials issue. For example:
 
 ```javascript
 client.getLatestTldrs(5, function (err, tldrs) {
-  if (err) { return console.log("Dang, an error happened: " + err); }
-    
-  console.log(tldrs);    
-})
+  if (err) {
+    return console.log("Dang, an error happened: " + err);
+  } else {
+    console.log("Here are five awesome summaries", tldrs);
+  }
+});
 ```
 
+## Searching tldrs by url
+The syntax is `client.searchByUrl(url, callback)` where `url` is the url (figures ...) and `callback` has signature (error, tldr). For example:
+
+```javascript
+client.searchByUrl('http://tldr.io', function (err, tldr) {
+  // tldr will hold the tldr of our home page
+  // which you can also read at http://tldr.io/tldrs/50252d16959a1fee13000052/tl-dr-sooo-meta-isnt-it
+});
+```
