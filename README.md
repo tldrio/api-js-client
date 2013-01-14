@@ -47,7 +47,7 @@ The syntax is `client.searchBatch(urls, callback)` where `urls` is an array of u
 ```javascript
 client.searchBatch(['http://tldr.io', 'http://news.ycombinator.com/'], function (err, tldr) {
   // tldrs will hold the two tldrs correspondign to the following pages:
-  // which you can also read at http://tldr.io/tldrs/50252d16959a1fee13000052/tl-dr-sooo-meta-isnt-it
+  // http://tldr.io/tldrs/50252d16959a1fee13000052/tl-dr-sooo-meta-isnt-it
   // http://tldr.io/tldrs/50633f3cfc4cf9870800000a/hacker-news
 });
 ```
