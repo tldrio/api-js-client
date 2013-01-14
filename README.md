@@ -1,7 +1,7 @@
 # Javascript client for tldr.io's public API
 
-Browser-side Javascript client for <a href="tldr.io">tldr.io</a>'s
-public API. For now only two routes are implemented: getting the latest tldrs and searching by url.
+Browser-side Javascript client for <a href="http://tldr.io">tldr.io</a>'s
+public API (whose doc you can find <a href="http://tldr.io/api-documentation">here</a>). For now only three routes are implemented: getting the latest tldrs and searching by url.
 
 ## Installation
 Just include `jsClient.js` in the webpage. You can alternatively copy
