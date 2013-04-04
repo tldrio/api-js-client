@@ -4,6 +4,7 @@
  *
  */
 
+  var $ = require('jquery');
   /**
    * Create a new client for the tldr.io API
    * @param {Object} options Object containing the credentials
@@ -18,9 +19,36 @@
     this.name = options.name;
     this.key = options.key;
     this.apiUrl = 'https://api.tldr.io';
-  }
+  };
 
+  /**
+   * Retrieve the contents of a url
+   * @param {String} url URL to retrieve
+   * @param {String} method HTTP method to use
+   * @param {Function} callback Will be called after the request is processed. Signature err, tldrs
+   *                            err is a message explaining the error, or null if no error
+   *                            tldrs is an array of the retrieved tldrs or an object if tldrs.length == 1
+   * @param {Object} options An optional last parameter
+  */
+  Client.prototype.callURL = function (url, method, callback, options){
+    var options = options ? {} : options;
+    
+    $.ajax({ type: method
+             , url: url
+             , data: options['data'] ? options['data'] : ""
+             , headers: { 'api-client-name': this.name,
+                          'api-client-key': this.key
+                      }
+             })
+    .done(function (data) { callback(null, data); })
+    .fail(function (jqxhr) {
+      if (jqxhr.status === 404) { return callback('URL not found'); }
+      if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
 
+      return callback('An unknown error happened');
+    });
+  };
+  
   /**
    * Fetch the latest tldrs
    * GET /tldrs/latest/:number
@@ -31,21 +59,10 @@
    *
    */
   Client.prototype.getLatestTldrs = function (number, callback) {
-    $.ajax({ type: 'GET'
-           , url: this.apiUrl + '/tldrs/latest/' + number
-           , headers: { 'api-client-name': this.name
-                      , 'api-client-key': this.key
-                      }
-           })
-     .done(function (data) { callback(null, data); })
-     .fail(function (jqxhr) {
-       if (jqxhr.status === 404) { return callback('URL not found'); }
-       if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
-
-       return callback('An unknown error happened');
-     });
+    var url = this.apiUrl + '/tldrs/latest/' + number;
+    var method = 'GET';
+    this.callURL(url, method, callback);
   };
-
 
   /**
    * Search a tldr by url
@@ -57,20 +74,10 @@
    *
    */
   Client.prototype.searchByUrl = function (url, callback) {
-    $.ajax({ type: 'GET'
-           , url: this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url)
-           , headers: { 'api-client-name': this.name
-                      , 'api-client-key': this.key
-                      }
-           })
-     .done(function (data) { callback(null, data); })
-     .fail(function (jqxhr) {
-       if (jqxhr.status === 404) { return callback('URL not found'); }
-       if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
-
-       return callback('An unknown error happened');
-     });
-  };
+    var url = this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url);
+    var method = 'GET';
+    this.callURL(url, method, callback);
+  };    
 
 
   /**
@@ -83,22 +90,17 @@
    *
    */
   Client.prototype.searchBatch = function (urls, callback) {
-    $.ajax({ type: 'POST'
-           , url: this.apiUrl + '/tldrs/searchBatch'
-           , data: { batch: urls }
-           , headers: { 'api-client-name': this.name
-                      , 'api-client-key': this.key
-                      }
-           })
-     .done(function (data) { callback(null, data.tldrs); })
-     .fail(function (jqxhr) {
-       if (jqxhr.status === 404) { return callback('URL not found'); }
-       if (jqxhr.status === 401) { return callback(jqxhr.responseText); }
-
-       return callback('An unknown error happened');
-     });
+    var url = this.apiUrl + '/tldrs/searchBatch'
+    var method = 'POST';
+    var options = {data:{ batch: urls }};
+    this.callURL(url, method, callback, options);
   };
 
-
   // Expose the client constructor in the global object
-  window.TldrioApiClient = Client;
+  if (typeof window === 'undefined') {
+    console.log("This is not a browser.  Please use the node wrapped version.");
+  } else {
+    window.TldrioApiClient = Client;
+  }
+
+
