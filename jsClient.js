@@ -4,7 +4,6 @@
  *
  */
 
-  var $ = require('jquery');
   /**
    * Create a new client for the tldr.io API
    * @param {Object} options Object containing the credentials
