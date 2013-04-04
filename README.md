@@ -45,7 +45,7 @@ client.searchByUrl('http://tldr.io', function (err, tldr) {
 The syntax is `client.searchBatch(urls, callback)` where `urls` is an array of urls and `callback` has signature (error, tldrs). You can't search for more than 50 tldrs at once. For example:
 
 ```javascript
-client.searchBatch(['http://tldr.io', 'http://news.ycombinator.com/'], function (err, tldr) {
+client.searchBatch(['http://tldr.io', 'http://news.ycombinator.com/'], function (err, tldrs) {
   // tldrs will hold the two tldrs correspondign to the following pages:
   // http://tldr.io/tldrs/50252d16959a1fee13000052/tl-dr-sooo-meta-isnt-it
   // http://tldr.io/tldrs/50633f3cfc4cf9870800000a/hacker-news
