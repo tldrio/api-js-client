@@ -30,8 +30,8 @@
    * @param {Object} options An optional last parameter
   */
   Client.prototype.callURL = function (url, method, callback, options){
-    var options = options ? {} : options;
-    
+    var options = options == void 0 ? {} : options;
+
     $.ajax({ type: method
              , url: url
              , data: options['data'] ? options['data'] : ""
@@ -101,5 +101,6 @@
   } else {
     window.TldrioApiClient = Client;
   }
+
 
 
