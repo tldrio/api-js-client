@@ -58,8 +58,8 @@
    *
    */
   Client.prototype.getLatestTldrs = function (number, callback) {
-    var url = this.apiUrl + '/tldrs/latest/' + number;
-    var method = 'GET';
+    var url = this.apiUrl + '/tldrs/latest/' + number,
+        method = 'GET';
     this.callURL(url, method, callback);
   };
 
@@ -73,8 +73,8 @@
    *
    */
   Client.prototype.searchByUrl = function (url, callback) {
-    var url = this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url);
-    var method = 'GET';
+    var url = this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url),
+        method = 'GET';
     this.callURL(url, method, callback);
   };    
 
@@ -89,9 +89,9 @@
    *
    */
   Client.prototype.searchBatch = function (urls, callback) {
-    var url = this.apiUrl + '/tldrs/searchBatch'
-    var method = 'POST';
-    var options = {data:{ batch: urls }};
+    var url = this.apiUrl + '/tldrs/searchBatch',
+        method = 'POST',
+        options = {data:{ batch: urls }};
     this.callURL(url, method, callback, options);
   };
 
