@@ -10,6 +10,7 @@
    *                           name: api client name
    *                           key: api client key
    */
+  
   function Client (options) {
     if (!options) { throw 'Missing options'; }
     if (!options.name) { throw 'Missing API client name'; }
@@ -29,12 +30,15 @@
    *                            tldrs is an array of the retrieved tldrs or an object if tldrs.length == 1
    * @param {Object} options An optional last parameter
   */
-  Client.prototype.callURL = function (url, method, callback, options){
-    var options = options == void 0 ? {} : options;
+  Client.prototype.callURL = function (url, method, options, callback){
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
 
     $.ajax({ type: method
              , url: url
-             , data: options['data'] ? options['data'] : ""
+             , data: options.data || ""
              , headers: { 'api-client-name': this.name,
                           'api-client-key': this.key
                       }
@@ -92,15 +96,12 @@
     var url = this.apiUrl + '/tldrs/searchBatch',
         method = 'POST',
         options = {data:{ batch: urls }};
-    this.callURL(url, method, callback, options);
+    this.callURL(url, method, options, callback);
   };
 
   // Expose the client constructor in the global object
-  if (typeof window === 'undefined') {
-    console.log("This is not a browser.  Please use the node wrapped version.");
-  } else {
+  if (window) {
     window.TldrioApiClient = Client;
+  } else {
+    console.log("This is not a browser.  Please use the node wrapped version.");
   }
-
-
-
