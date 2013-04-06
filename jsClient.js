@@ -25,10 +25,10 @@
    * Retrieve the contents of a url
    * @param {String} url URL to retrieve
    * @param {String} method HTTP method to use
+   * @param {Object} options pptions.data will be sent with request
    * @param {Function} callback Will be called after the request is processed. Signature err, tldrs
    *                            err is a message explaining the error, or null if no error
    *                            tldrs is an array of the retrieved tldrs or an object if tldrs.length == 1
-   * @param {Object} options An optional last parameter
   */
   Client.prototype.callURL = function (url, method, options, callback){
     if (typeof options === 'function') {
