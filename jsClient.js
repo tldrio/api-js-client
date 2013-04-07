@@ -10,7 +10,6 @@
    *                           name: api client name
    *                           key: api client key
    */
-  
   function Client (options) {
     if (!options) { throw 'Missing options'; }
     if (!options.name) { throw 'Missing API client name'; }
@@ -22,10 +21,11 @@
   };
 
   /**
-   * Retrieve the contents of a url
+   * Get resource
    * @param {String} url URL to retrieve
    * @param {String} method HTTP method to use
-   * @param {Object} options pptions.data will be sent with request
+   * @param {Object} options Optional object when additional data is needed. Only one possible field for now:
+   *                         'options.data', which contains data to be sent with a POST request
    * @param {Function} callback Will be called after the request is processed. Signature err, tldrs
    *                            err is a message explaining the error, or null if no error
    *                            tldrs is an array of the retrieved tldrs or an object if tldrs.length == 1
@@ -51,7 +51,7 @@
       return callback('An unknown error happened');
     });
   };
-  
+
   /**
    * Fetch the latest tldrs
    * GET /tldrs/latest/:number
@@ -80,7 +80,7 @@
     var url = this.apiUrl + '/tldrs/search?url=' + encodeURIComponent(url),
         method = 'GET';
     this.callURL(url, method, callback);
-  };    
+  };
 
 
   /**
@@ -95,7 +95,7 @@
   Client.prototype.searchBatch = function (urls, callback) {
     var url = this.apiUrl + '/tldrs/searchBatch',
         method = 'POST',
-        options = {data:{ batch: urls }};
+        options = { data:{ batch: urls } };
     this.callURL(url, method, options, callback);
   };
 
